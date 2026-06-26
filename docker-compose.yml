@@ -1,0 +1,48 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: casino_backend
+    ports:
+      - "5000:5000"
+    env_file:
+      - .env
+    environment:
+      - PORT=5000
+    networks:
+      - casino_network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: casino_frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - NUXT_PUBLIC_API_BASE=http://localhost:5000/api/admin
+    depends_on:
+      - backend
+    networks:
+      - casino_network
+
+  aceplay-fe:
+    build:
+      context: ./aceplayFE
+      dockerfile: Dockerfile
+    container_name: casino_aceplay_fe
+    ports:
+      - "3001:3000"
+    environment:
+      - PORT=3000
+      - BACKEND_INTERNAL_URL=http://backend:5000
+    depends_on:
+      - backend
+    networks:
+      - casino_network
+
+networks:
+  casino_network:
+    driver: bridge

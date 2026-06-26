@@ -1,0 +1,11 @@
+node_modules
+frontend
+aceplayFE
+.git
+.env
+.env.example
+*.log
+docker-compose.yml
+Dockerfile
+.gitignore
+README.md
