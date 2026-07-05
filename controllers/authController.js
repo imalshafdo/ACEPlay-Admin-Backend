@@ -117,12 +117,13 @@ export const verifyRegister2FA = asyncHandler(async (req, res) => {
     return res.status(400).json({ success: false, message: 'Invalid or expired 2FA token/SMS code' });
   }
 
-  // Move temporary 2FA secret to active 2FA secret
+  // Move temporary 2FA secret to active 2FA secret and complete registration
   admin.twoFactorSecret = admin.tempTwoFactorSecret;
   admin.tempTwoFactorSecret = null;
   admin.smsCode = null;
   admin.smsCodeExpires = null;
   admin.isTwoFactorEnabled = true;
+  admin.requiresPasswordChange = false;
   await admin.save();
 
   const jwtToken = signToken(admin._id);
