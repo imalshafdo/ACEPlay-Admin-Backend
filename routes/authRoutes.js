@@ -11,6 +11,7 @@ import {
 import { protect } from '../middleware/authMiddleware.js';
 import siteSettingsRoutes from './siteSettingsRoutes.js';
 import navItemRoutes from './navItemRoutes.js';
+import bigWinRoutes from './bigWinRoutes.js';
 
 const router = express.Router();
 
@@ -29,6 +30,7 @@ router.get('/profile', protect, getMe);
 router.post('/logout', protect, logout);
 router.use('/site-settings', protect, siteSettingsRoutes);
 router.use('/navigation', protect, navItemRoutes);
+router.use('/big-wins', protect, bigWinRoutes);
 router.post('/2fa/setup', protect, setupTwoFactor);
 router.post('/2fa/enable', protect, setupTwoFactor);
 router.post('/2fa/verify', protect, verifyTwoFactor);
